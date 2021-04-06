@@ -12,6 +12,7 @@ fun RecipeExecutor.mvvmActivityRecipe(
         activityClass: String,
         layoutName: String,
         packageName: String,
+        basePackageName: String,
         needPaging3Enable: Boolean,
         beanName: String,
         adapterName: String,
@@ -34,7 +35,7 @@ fun RecipeExecutor.mvvmActivityRecipe(
 //            useMaterial2 = false
 //    )
 
-    val mvvmActivity = mvvmAcitivityKt(projectData.applicationPackage,
+    val mvvmActivity = mvvmAcitivityKt(basePackageName,
             activityClass, layoutName, packageName,beanName,viewModelEnable,needPaging3Enable)
     // 保存Activity
     save(mvvmActivity, srcOut.resolve("${activityClass}Activity.${ktOrJavaExt}"))
@@ -43,18 +44,16 @@ fun RecipeExecutor.mvvmActivityRecipe(
 
     // 保存viewmodel
     if (viewModelEnable||needPaging3Enable) {
-
-
-        save(mvvmViewModel(packageName, activityClass,beanName,needPaging3Enable), srcOut.resolve("${activityClass}ActivityViewModel.${ktOrJavaExt}"))
-        if (repositoryEnable||needPaging3Enable) {
+        save(mvvmViewModel(basePackageName,packageName, activityClass,beanName,needPaging3Enable), srcOut.resolve("${activityClass}ActivityViewModel.${ktOrJavaExt}"))
+        if (repositoryEnable) {
             //repository
             save(mvvmRepository(packageName, activityClass,beanName,needPaging3Enable,pagingSourceName), srcOut.resolve("${activityClass}ActivityRepository.${ktOrJavaExt}"))
         }
     }
 
     if(needPaging3Enable){
-        save(beanKt(packageName,beanName), srcOut.resolve("${beanName}.${ktOrJavaExt}"))
-        save(mvvmAdapterKt(packageName,beanName,adapterName,adapterLayoutName), srcOut.resolve("${adapterName}.${ktOrJavaExt}"))
+        save(beanKt(basePackageName,packageName,beanName), srcOut.resolve("${beanName}.${ktOrJavaExt}"))
+        save(mvvmAdapterKt(basePackageName,packageName,beanName,adapterName,adapterLayoutName), srcOut.resolve("${adapterName}.${ktOrJavaExt}"))
         save(mvvmAdapterLayoutKt(packageName,beanName), resOut.resolve("layout/${adapterLayoutName}.xml"))
         save(beanPagingSourceKt(packageName,beanName,pagingSourceName), srcOut.resolve("${pagingSourceName}.${ktOrJavaExt}"))
 

@@ -10,7 +10,7 @@ fun mvvmAdapterLayoutKt(
 
     <data>
         <variable
-            name="$beanName"
+            name="${beanName.toLowerCase()}"
             type="${packageName}.${beanName}" />
     </data>
     

@@ -7,9 +7,6 @@ fun beanPagingSourceKt(
 ) =
     """
 package ${packageName}
-
-package com.example.basemvvm.paging_source
-
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ${packageName}.${beanName}
@@ -25,7 +22,7 @@ class ${pagingSourceName}() : PagingSource<Int, ${beanName}>() {
             val pageSize = params.loadSize
             
             //获取数据
-            val list = mutableListOf()
+            val list = mutableListOf<${beanName}>()
 
             if(list.isEmpty()&&page==0){
                 return LoadResult.Page(mutableListOf(${beanName}().apply { empty=true }), null,null)

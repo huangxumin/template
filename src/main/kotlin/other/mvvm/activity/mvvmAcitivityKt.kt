@@ -1,7 +1,7 @@
 package other.mvvm.activity.src.app_package
 
 fun mvvmAcitivityKt(
-        applicationPackage: String?,
+        basePackageName: String,
         activityClass: String,
         layoutName: String,
         packageName: String,
@@ -11,11 +11,12 @@ fun mvvmAcitivityKt(
 ) = if (needPaging3Enable) {
     """
 package ${packageName}
-import com.afanticar.base.ui.BaseMvvmActivity
+import ${basePackageName}.ui.BaseMvvmActivity
 import androidx.paging.PagingData
 import ${packageName}.databinding.Activity${activityClass}Binding
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
     override fun initView() {
     }
 
+    @InternalCoroutinesApi
     override fun initData() {
            lifecycleScope.launch {
             mBinding?.viewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
@@ -44,7 +46,7 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
     if (viewModelEnable) {
         """
 package ${packageName}
-import com.afanticar.base.ui.BaseMvvmActivity
+import ${basePackageName}.ui.BaseMvvmActivity
 import ${packageName}.databinding.Activity${activityClass}Binding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,7 +75,7 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
         """
 
 package ${packageName}
-import com.afanticar.base.ui.BaseActivity
+import ${basePackageName}.ui.BaseActivity
 
 class ${activityClass}Activity : BaseActivity(R.layout.${layoutName}) {
     override fun onEvent() {

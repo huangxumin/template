@@ -20,7 +20,7 @@ val mvvmActivityTemplate
 
         val activityClass = stringParameter {
             name = "Activity Name"
-            default = "Main"
+            default = "Test"
             help = "只输入名字，不要包含Activity"
             constraints = listOf(Constraint.NONEMPTY)
         }
@@ -44,7 +44,7 @@ val mvvmActivityTemplate
 
         val beanName = stringParameter {
             name = "bean Name"
-            default = "People"
+            default = "Test"
             help = "Bean类名"
             visible={needPaging3.value}
             constraints = listOf(Constraint.NONEMPTY)
@@ -52,7 +52,7 @@ val mvvmActivityTemplate
 
         val adapterName = stringParameter {
             name = "adapter Name"
-            default = "Test"
+            default = ""
             help = "Adapter类名"
             visible={needPaging3.value}
             constraints = listOf(Constraint.NONEMPTY)
@@ -61,7 +61,7 @@ val mvvmActivityTemplate
 
       val  adapterLayoutName = stringParameter {
             name = "Adapter Layout Name"
-            default = "ItemLayout"
+            default = ""
             help = "请输入布局的名字"
             visible={needPaging3.value}
             constraints = listOf(Constraint.LAYOUT, Constraint.UNIQUE, Constraint.NONEMPTY)
@@ -70,7 +70,7 @@ val mvvmActivityTemplate
 
         val pagingSourceName = stringParameter {
             name = "PagingSource Name"
-            default = "PagingSource"
+            default = ""
             help = "PagingSource类名"
             visible={needPaging3.value}
             constraints = listOf(Constraint.NONEMPTY)
@@ -79,7 +79,7 @@ val mvvmActivityTemplate
 
 
         val needViewModel = booleanParameter {
-            name = "是否需要关联创建viewModel(会同时取消repository)"
+            name = "是否需要关联创建viewModel(包括repository)"
             default = true
         }
 
@@ -90,6 +90,7 @@ val mvvmActivityTemplate
         }
 
         val packageName = defaultPackageNameParameter
+        val basePackageName = basePackageNameParameter
 
 
 
@@ -97,6 +98,7 @@ val mvvmActivityTemplate
                 TextFieldWidget(activityClass),
                 TextFieldWidget(layoutName),
                 PackageNameWidget(packageName),
+                PackageNameWidget(basePackageName),
                 CheckBoxWidget(needPaging3),
                 TextFieldWidget(beanName),
                 TextFieldWidget(adapterName),
@@ -113,6 +115,7 @@ val mvvmActivityTemplate
                     activityClass.value,
                     layoutName.value,
                     packageName.value,
+                    basePackageName.value,
                     needPaging3.value,
                     beanName.value,
                     adapterName.value,
@@ -129,7 +132,13 @@ val defaultPackageNameParameter
     get() = stringParameter {
         name = "Package name"
         visible = { !isNewModule }
-        default = "com.mycompany.myapp"
+        default = "com.afanticar.base"
         constraints = listOf(Constraint.PACKAGE)
         suggest = { packageName }
+    }
+
+val basePackageNameParameter
+    get() = stringParameter {
+        name = "Base Module Package name"
+        default = "com.afanticar.base"
     }

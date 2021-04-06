@@ -1,14 +1,14 @@
 package other.mvvm.activity.src.app_package
 
 fun beanKt(
+        basePackageName: String,
         packageName: String,
         beanName: String,
 ) =
     """
 package ${packageName}
 
-package com.example.basemvvm.bean
-import com.afanticar.base.base_adapter.BaseResponse
+import ${basePackageName}.base_adapter.BaseResponse
 
 class ${beanName}(
      var xx: String = "",

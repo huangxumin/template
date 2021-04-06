@@ -1,13 +1,57 @@
 package other.mvvm.fragment
 
 fun mvvmFragmentKt(
-        applicationPackage: String?,
+        basePackageName: String?,
         fragmentClass: String,
         layoutName: String,
         packageName: String,
-        viewModelEnable: Boolean
-) = if (viewModelEnable) {
-    """
+        beanName: String,
+        viewModelEnable: Boolean,
+        needPaging3Enable: Boolean
+) =
+        if (needPaging3Enable) {
+
+
+            """
+package ${packageName}
+import com.afanticar.base.ui.BaseMvvmFragment
+import androidx.paging.PagingData
+import ${packageName}.databinding.Fragment${fragmentClass}Binding
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
+
+
+@AndroidEntryPoint
+class ${fragmentClass}Fragment : BaseMvvmFragment<Fragment${fragmentClass}Binding,${fragmentClass}FragmentViewModel>(R.layout.${layoutName}) {
+
+
+    override fun initView() {
+    }
+
+    @InternalCoroutinesApi
+    override fun initData() {
+           lifecycleScope.launch {
+            mBinding?.viewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
+                    override suspend fun emit(value: PagingData<${beanName}>) {
+//                        binding?.${beanName.toLowerCase()}Adapter?.submitData(value)
+                    }
+                })
+        }
+    }
+
+//    override fun initOtherViewModel() {
+//    }
+
+
+}
+"""
+
+        } else {
+            if (viewModelEnable) {
+                """
 package ${packageName}
 import com.afanticar.base.ui.BaseMvvmFragment
 import ${packageName}.databinding.Fragment${fragmentClass}Binding
@@ -30,8 +74,8 @@ class ${fragmentClass}Fragment : BaseMvvmFragment<Fragment${fragmentClass}Bindin
 
 }
 """
-} else {
-    """
+            } else {
+                """
 package ${packageName}
 import com.afanticar.base.ui.BaseFragment
 
@@ -47,4 +91,5 @@ class ${fragmentClass}Fragment : BaseFragment(R.layout.${layoutName}) {
     }
 }
     """
-}
+            }
+        }

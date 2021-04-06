@@ -9,8 +9,6 @@ fun mvvmRepository(
 ) = if (needPaging3Enable) {
     """
 package ${packageName}
-import javax.inject.Inject
-import ${packageName}.${beanName}
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -26,10 +24,6 @@ class ${activityClass}ActivityRepository @Inject constructor() {
             pagingSourceFactory = { ${pagingSourceName}() }
         ).flow
     }
-
-}
-
-
 }
 """
 } else {

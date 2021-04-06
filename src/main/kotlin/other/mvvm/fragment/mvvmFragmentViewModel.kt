@@ -1,8 +1,35 @@
 package other.mvvm.fragment
+
 fun mvvmFragmentViewModel(
-        packageName:String,
-        fragmentClass:String
-)="""
+        basePackageName: String,
+        packageName: String,
+        fragmentClass: String,
+        beanName: String,
+        needPaging3Enable: Boolean
+) = if (needPaging3Enable) {
+
+    """
+package ${packageName}
+
+import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.viewModelScope
+import ${basePackageName}.viewmodel.BaseViewModel
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
+class ${fragmentClass}FragmentViewModel @ViewModelInject 
+constructor(application: Application,val repository ${fragmentClass}FragmentRepository): BaseViewModel(application) {
+
+    fun getData(): Flow<PagingData<${beanName}>> {
+        return repository.getPagingData().cachedIn(viewModelScope)
+    }
+
+}
+"""
+
+} else {
+    """
 package ${packageName}
 
 import android.app.Application
@@ -15,3 +42,4 @@ BaseViewModel(application) {
 
 }
 """
+}
