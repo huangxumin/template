@@ -2,9 +2,8 @@ package other.mvvm.activity
 
 import com.android.tools.idea.wizard.template.ModuleTemplateData
 import com.android.tools.idea.wizard.template.RecipeExecutor
-import other.mvvm.activity.res.layout.mvvmActivityXml
-import other.mvvm.activity.res.layout.mvvmAdapterLayoutKt
 import other.mvvm.activity.src.app_package.*
+import other.mvvm.page_fragment.*
 
 
 fun RecipeExecutor.mvvmActivityRecipe(
@@ -13,6 +12,8 @@ fun RecipeExecutor.mvvmActivityRecipe(
         layoutName: String,
         packageName: String,
         basePackageName: String,
+        needPageFragment: Boolean,
+        fragmentLayoutName: String,
         needPaging3Enable: Boolean,
         beanName: String,
         adapterName: String,
@@ -51,11 +52,27 @@ fun RecipeExecutor.mvvmActivityRecipe(
         }
     }
 
+    if(needPageFragment){
+
+        val mvvmFragment = pageFragmentKt(basePackageName,
+            activityClass, fragmentLayoutName, packageName,beanName,viewModelEnable,needPaging3Enable,adapterName)
+        // 保存Activity
+        save(mvvmFragment, srcOut.resolve("${activityClass}Fragment.${ktOrJavaExt}"))
+        // 保存xml
+        save(pageFragmentXml(packageName, activityClass,beanName,adapterName,viewModelEnable,needPaging3Enable),
+            resOut.resolve("layout/${fragmentLayoutName}.xml"))
+
+        // 保存adapter bean item_layout
+        save(pageBeanKt(basePackageName,packageName,beanName), srcOut.resolve("${beanName}Bean.${ktOrJavaExt}"))
+        save(pageAdapterKt(basePackageName,packageName,beanName,adapterName,adapterLayoutName), srcOut.resolve("${adapterName}.${ktOrJavaExt}"))
+        save(pageAdapterLayoutKt(packageName,beanName), resOut.resolve("layout/${adapterLayoutName}.xml"))
+    }
+
     if(needPaging3Enable){
-        save(beanKt(basePackageName,packageName,beanName), srcOut.resolve("${beanName}.${ktOrJavaExt}"))
-        save(mvvmAdapterKt(basePackageName,packageName,beanName,adapterName,adapterLayoutName), srcOut.resolve("${adapterName}.${ktOrJavaExt}"))
-        save(mvvmAdapterLayoutKt(packageName,beanName), resOut.resolve("layout/${adapterLayoutName}.xml"))
-        save(beanPagingSourceKt(packageName,beanName,pagingSourceName), srcOut.resolve("${pagingSourceName}.${ktOrJavaExt}"))
+//        save(beanKt(basePackageName, packageName, beanName), srcOut.resolve("${beanName}.${ktOrJavaExt}"))
+//        save(mvvmAdapterKt(basePackageName,packageName,beanName,adapterName,adapterLayoutName), srcOut.resolve("${adapterName}.${ktOrJavaExt}"))
+//        save(mvvmAdapterLayoutKt(packageName,beanName), resOut.resolve("layout/${adapterLayoutName}.xml"))
+//        save(beanPagingSourceKt(packageName,beanName,pagingSourceName), srcOut.resolve("${pagingSourceName}.${ktOrJavaExt}"))
 
     }
 

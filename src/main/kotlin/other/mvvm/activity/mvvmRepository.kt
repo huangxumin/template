@@ -13,6 +13,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ${packageName}.${beanName}
+import com.afanticar.network.constants.Constants
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class ${activityClass}ActivityRepository @Inject constructor() {
 
     fun getPagingData(): Flow<PagingData<${beanName}>> {
         return Pager(
-            config = PagingConfig(10),
+            config = PagingConfig( pageSize = Constants.PAGE_SIZE),
             pagingSourceFactory = { ${pagingSourceName}() }
         ).flow
     }
@@ -30,11 +31,18 @@ class ${activityClass}ActivityRepository @Inject constructor() {
 
     """
 package ${packageName}
+
+
+import com.afanticar.common.bean.CommonPageBean
+import com.afanticar.network.bean.BaseResponse
 import javax.inject.Inject
 
-class ${activityClass}ActivityRepository @Inject constructor() {
 
+class ${activityClass}Repository @Inject constructor() {
 
+    suspend fun getXData(page: Int, size: Int): CommonPageBean<Any> {
+        return XService.create().getX(page, size)
+    }
 
 }
 """

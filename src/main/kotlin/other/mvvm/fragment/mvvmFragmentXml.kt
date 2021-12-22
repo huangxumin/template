@@ -29,13 +29,23 @@ fun mvvmFragmentXml(
 <androidx.constraintlayout.widget.ConstraintLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+            
            <androidx.recyclerview.widget.RecyclerView
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:${beanName.toLowerCase()}Adapter="@{${beanName.toLowerCase()}_adapter}"/>
-    
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
     
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -16,10 +16,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import ${basePackageName}.viewmodel.BaseViewModel
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
 
 class ${fragmentClass}FragmentViewModel @ViewModelInject 
-constructor(application: Application,val repository ${fragmentClass}FragmentRepository): BaseViewModel(application) {
+constructor(application: Application,val repository: ${fragmentClass}FragmentRepository): BaseViewModel(application) {
 
     fun getData(): Flow<PagingData<${beanName}>> {
         return repository.getPagingData().cachedIn(viewModelScope)
@@ -37,7 +38,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import com.afanticar.base.viewmodel.BaseViewModel
 
 class ${fragmentClass}FragmentViewModel @ViewModelInject constructor(
-application: Application,repository ${fragmentClass}FragmentRepository):
+application: Application,repository :${fragmentClass}FragmentRepository):
 BaseViewModel(application) {
 
 }

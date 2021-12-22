@@ -1,27 +1,32 @@
-package other.mvvm.activity.src.app_package
+package other.mvvm.activity
 
 fun mvvmAcitivityKt(
-        basePackageName: String,
-        activityClass: String,
-        layoutName: String,
-        packageName: String,
-        beanName: String,
-        viewModelEnable: Boolean,
-        needPaging3Enable: Boolean
+    basePackageName: String,
+    activityClass: String,
+    layoutName: String,
+    packageName: String,
+    beanName: String,
+    viewModelEnable: Boolean,
+    needPaging3Enable: Boolean
 ) = if (needPaging3Enable) {
     """
 package ${packageName}
 import ${basePackageName}.ui.BaseMvvmActivity
 import androidx.paging.PagingData
 import ${packageName}.databinding.Activity${activityClass}Binding
+import com.afanticar.common.ex.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 
+
+
+
+
 @AndroidEntryPoint
-class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ActivityViewModel>(R.layout.${layoutName}) {
+class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ViewModel>(R.layout.${layoutName}) {
 
 
     override fun initView() {
@@ -29,6 +34,9 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
 
     @InternalCoroutinesApi
     override fun initData() {
+    
+         mBinding.${beanName.toLowerCase()}Adapter = ${beanName}Adapter(mActivity.applicationContext)
+    
            lifecycleScope.launch {
             mBinding?.viewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
                     override suspend fun emit(value: PagingData<${beanName}>) {
@@ -45,29 +53,64 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
 } else {
     if (viewModelEnable) {
         """
-package ${packageName}
-import ${basePackageName}.ui.BaseMvvmActivity
+package $packageName
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import ${packageName}.R
 import ${packageName}.databinding.Activity${activityClass}Binding
+import com.afanticar.base.ui.BaseMvvmActivity
+import ${packageName}.${activityClass}ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
 @AndroidEntryPoint
-class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ActivityViewModel>(R.layout.${layoutName}) {
+class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ViewModel>(R.layout.${layoutName}) {
+
+
+
+  //  val medalId by lazy { intent.getStringExtra("medalId") }
+
+    val m${activityClass}Fragment by lazy {
+        ${activityClass}Fragment.newInstance()
+    }
 
 
     override fun initView() {
+         resetImmersionBar(R.color.color_171722,false)
+         mBinding?.activityBack?.setOnSingleClickListener({
+            onBackPressed()
+        })
+        
+     
+        val translation = supportFragmentManager.beginTransaction()
+        translation.replace(R.id.fragment, m${activityClass}Fragment)
+        translation.commitNowAllowingStateLoss()
+
     }
 
     override fun initData() {
-           lifecycleScope.launch {
-            binding?.fragmentSecondViewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
-                    override suspend fun emit(value: PagingData<${beanName}>) {
-//                        binding?.demoAdapter?.submitData(value)
-                    }
-                })
-        }
+
     }
 
-    override fun initOtherViewModel() {
+    
+    companion object {
+
+        fun launch(
+            activity: Activity
+        ) {
+            activity.startActivity(
+                Intent(
+                    activity,
+                    ${activityClass}Activity::class.java
+                ).apply {
+
+                   // putExtra("medalId", medalId)
+              
+                })
+        }
     }
 }
 """
@@ -81,7 +124,6 @@ class ${activityClass}Activity : BaseActivity(R.layout.${layoutName}) {
     override fun onEvent() {
       
     }
-
 }
     
    """

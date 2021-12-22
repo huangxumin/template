@@ -16,8 +16,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ${basePackageName}.base_adapter.BaseMvvMCommonAdapter
-import ${basePackageName}.base_adapter.ViewHolder
+import ${basePackageName}.rv.base_adapter.BaseMvvMCommonAdapter
+import ${basePackageName}.rv.base_adapter.ViewHolder
 import ${packageName}.${beanName}
 import ${packageName}.databinding.${beanName}ItemLayoutBinding
 import kotlin.jvm.internal.Intrinsics
@@ -36,8 +36,6 @@ class ${adapterName}(context: Context) :
     BaseMvvMCommonAdapter<${beanName}, ${beanName}ItemLayoutBinding>(
         context,
         R.layout.${adapterLayoutName},
-        R.layout.rv_error_layout,
-        R.layout.rv_empty_layout,
         diffCallback) {
 
     class ${adapterName}DiffCallback : DiffUtil.ItemCallback<${beanName}>() {

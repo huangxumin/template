@@ -12,6 +12,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ${packageName}.${beanName}
+import com.afanticar.network.constants.Constants
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class ${activityClass}FragmentRepository @Inject constructor() {
 
     fun getPagingData(): Flow<PagingData<${beanName}>> {
         return Pager(
-            config = PagingConfig(10),
+            config = PagingConfig( pageSize = Constants.PAGE_SIZE),
             pagingSourceFactory = { ${pagingSourceName}() }
         ).flow
     }

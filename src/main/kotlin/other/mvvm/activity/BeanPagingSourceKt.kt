@@ -18,13 +18,15 @@ class ${pagingSourceName}() : PagingSource<Int, ${beanName}>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ${beanName}> {
         try {
 
-            val page = params.key ?: 0
+            val page = params.key ?: 1
             val pageSize = params.loadSize
             
             //获取数据
             val list = mutableListOf<${beanName}>()
+            
+             //todo
 
-            if(list.isEmpty()&&page==0){
+            if(list.isEmpty()&&page==1){
                 return LoadResult.Page(mutableListOf(${beanName}().apply { empty=true }), null,null)
             }
             val prevKey = if (page > 1) page - 1 else null

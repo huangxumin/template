@@ -33,10 +33,11 @@ class ${fragmentClass}Fragment : BaseMvvmFragment<Fragment${fragmentClass}Bindin
 
     @InternalCoroutinesApi
     override fun initData() {
+        mBinding.${beanName.toLowerCase()}Adapter = ${beanName}Adapter(mActivity.applicationContext)
            lifecycleScope.launch {
             mBinding?.viewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
                     override suspend fun emit(value: PagingData<${beanName}>) {
-//                        binding?.${beanName.toLowerCase()}Adapter?.submitData(value)
+                        mBinding?.${beanName.toLowerCase()}Adapter?.submitData(value)
                     }
                 })
         }

@@ -1,6 +1,6 @@
-package other.mvvm.activity.res.layout
+package other.mvvm.page_fragment
 
-fun mvvmAdapterLayoutKt(
+fun pageAdapterLayoutKt(
         packageName: String,
         beanName: String
 )=
@@ -9,9 +9,7 @@ fun mvvmAdapterLayoutKt(
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="${beanName.toLowerCase()}"
-            type="${packageName}.${beanName}" />
+
     </data>
     
 <androidx.constraintlayout.widget.ConstraintLayout 
