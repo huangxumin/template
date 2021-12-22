@@ -2,6 +2,7 @@ package other.mvvm.activity
 
 import com.android.tools.idea.wizard.template.*
 import com.android.tools.idea.wizard.template.impl.activities.common.MIN_API
+import com.android.tools.idea.wizard.template.impl.defaultPackageNameParameter
 
 
 val mvvmActivityTemplate
@@ -70,7 +71,7 @@ val mvvmActivityTemplate
             help = "Adapter类名"
             visible = { needPageFragment.value }
             constraints = listOf(Constraint.NONEMPTY)
-            suggest = { "${extractClassName(beanName.value)}Adapter" }
+            suggest = { "${extractClassName(activityClass.value)}Adapter" }
         }
 
         val adapterLayoutName = stringParameter {
@@ -79,7 +80,7 @@ val mvvmActivityTemplate
             help = "请输入布局的名字"
             visible = { needPageFragment.value }
             constraints = listOf(Constraint.LAYOUT, Constraint.UNIQUE, Constraint.NONEMPTY)
-            suggest = { "${classToResource(beanName.value)}_item_layout" }
+            suggest = { "${classToResource(activityClass.value)}_item_layout" }
         }
 
 
@@ -121,6 +122,7 @@ val mvvmActivityTemplate
         }
 
         val basePackageName = "com.afanticar.base"
+
 
 
 

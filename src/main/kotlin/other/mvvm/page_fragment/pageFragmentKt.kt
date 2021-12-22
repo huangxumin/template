@@ -82,10 +82,11 @@ class ${fragmentClass}Fragment : CommonPageViewFragment
                 """
 package ${packageName}
 
+import android.os.Bundle
 import android.view.View
 import ${packageName}.R
 import ${packageName}.${beanName}Adapter
-import c${packageName}. ${beanName}Bean
+import ${packageName}. ${beanName}Bean
 import ${packageName}.databinding.Fragment${fragmentClass}Binding
 import com.afanticar.common.common_page_new_utils.PageNewFragment
 import com.afanticar.common.common_page_new_utils.bean.LoadStatusBean

@@ -62,6 +62,7 @@ import ${packageName}.R
 import ${packageName}.databinding.Activity${activityClass}Binding
 import com.afanticar.base.ui.BaseMvvmActivity
 import ${packageName}.${activityClass}ViewModel
+import com.afanticar.common.ex.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 

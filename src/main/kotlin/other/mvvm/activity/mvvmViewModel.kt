@@ -45,7 +45,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
 class ${activityClass}ViewModel @ViewModelInject 
-constructor(application: Application,repository: ${activityClass}Repository): CommonPageViewModel(application) {
+constructor(application: Application,val repository: ${activityClass}Repository): CommonPageViewModel(application) {
 
 
     val xData = MutableLiveData<CommonPageStatusBean<Any>>()
@@ -55,7 +55,7 @@ constructor(application: Application,repository: ${activityClass}Repository): Co
 
         viewModelScope.launch {
             pageExecute {
-                mGroupRepository.getXData(current, size)
+                repository.getXData(current, size)
             }.collect(successCommonPageFlowCollector {
                 xData.postValue(it)
             })
