@@ -32,16 +32,18 @@ class ${activityClass}ActivityRepository @Inject constructor() {
     """
 package ${packageName}
 
-
-import com.afanticar.common.bean.CommonPageBean
-import com.afanticar.network.bean.BaseResponse
+import com.afanticar.common.common_page_new_utils.bean.CommonPageStatusBean
+import com.afanticar.common.net.executeReturnCommonBean
 import javax.inject.Inject
 
 
 class ${activityClass}Repository @Inject constructor() {
 
-    suspend fun getXData(page: Int, size: Int): CommonPageBean<Any> {
-        return XService.create().getX(page, size)
+    suspend fun get${activityClass}Data(page: Int, size: Int): CommonPageStatusBean<${beanName}Bean> {
+
+       return executeReturnCommonBean<${beanName}Bean>(page,size){
+            XService.create().get${activityClass}Data(page, size)
+       }
     }
 
 }

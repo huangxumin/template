@@ -1,11 +1,11 @@
 package other.mvvm.activity
 
 fun mvvmViewModel(
-        basePackageName: String,
-        packageName: String,
-        activityClass: String,
-        beanName: String,
-        needPaging3Enable: Boolean
+    basePackageName: String,
+    packageName: String,
+    activityClass: String,
+    beanName: String,
+    needPaging3Enable: Boolean
 ) = if (needPaging3Enable) {
     """
 package $packageName
@@ -48,17 +48,16 @@ class ${activityClass}ViewModel @ViewModelInject
 constructor(application: Application,val repository: ${activityClass}Repository): CommonPageViewModel(application) {
 
 
-    val xData = MutableLiveData<CommonPageStatusBean<Any>>()
+    val xData = MutableLiveData<CommonPageStatusBean<${beanName}Bean>>()
 
     @InternalCoroutinesApi
-    fun getXData() {
+    fun get${activityClass}Data(loadStatus: LoadStatusBean) {
 
         viewModelScope.launch {
-            pageExecute {
-                repository.getXData(current, size)
-            }.collect(successCommonPageFlowCollector {
-                xData.postValue(it)
-            })
+         
+               val date= repository.get${activityClass}Data(loadStatus.current, loadStatus.pageSize)
+               xData.postValue(date)
+          
         }
 
     }

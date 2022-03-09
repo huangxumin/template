@@ -57,12 +57,9 @@ package $packageName
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
-import ${packageName}.R
+import ${packageName}.util.setOnSingleClickListener
 import ${packageName}.databinding.Activity${activityClass}Binding
 import com.afanticar.base.ui.BaseMvvmActivity
-import ${packageName}.${activityClass}ViewModel
-import com.afanticar.common.ex.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -79,9 +76,9 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
     }
 
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?)  {
          resetImmersionBar(R.color.color_171722,false)
-         mBinding?.activityBack?.setOnSingleClickListener({
+         mBinding.activityBack.setOnSingleClickListener({
             onBackPressed()
         })
         

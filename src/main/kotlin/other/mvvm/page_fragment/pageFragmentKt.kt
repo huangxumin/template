@@ -109,9 +109,6 @@ class ${fragmentClass}Fragment : PageNewFragment<Fragment${fragmentClass}Binding
             true,
         )
     }
-
-    override fun initData() {
-    }
     
     override fun initDataCallback() {
         mViewModel.xData.observe(this, {
@@ -122,7 +119,7 @@ class ${fragmentClass}Fragment : PageNewFragment<Fragment${fragmentClass}Binding
     
      @InternalCoroutinesApi
     override fun loadData(loadStatus: LoadStatusBean) {
-        mViewModel.getXData()
+        mViewModel.get${fragmentClass}Data(loadStatus)
     }
     
     @InternalCoroutinesApi
@@ -132,7 +129,6 @@ class ${fragmentClass}Fragment : PageNewFragment<Fragment${fragmentClass}Binding
             mBinding.recyclerview,
             m${beanName}Adapter,
             mBinding.loading,
-            mBinding.scrollView
         )
 
         mBinding?.recyclerview.removeItemDecoration(mLinearSpacingItemDecoration)

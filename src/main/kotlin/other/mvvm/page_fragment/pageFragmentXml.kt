@@ -79,24 +79,12 @@ fun pageFragmentXml(
                 android:layout_height="wrap_content" />
 
 
-            <com.afanticar.common.widget.CustomNestedScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
 
-                  <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.recyclerview.widget.RecyclerView
+              <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
-                  </RelativeLayout>
 
-            </com.afanticar.common.widget.CustomNestedScrollView>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     
