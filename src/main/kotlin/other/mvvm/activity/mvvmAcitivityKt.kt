@@ -15,7 +15,6 @@ import ${basePackageName}.ui.BaseMvvmActivity
 import androidx.paging.PagingData
 import ${packageName}.databinding.Activity${activityClass}Binding
 import com.afanticar.common.ex.setOnSingleClickListener
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
@@ -24,8 +23,6 @@ import kotlinx.coroutines.launch
 
 
 
-
-@AndroidEntryPoint
 class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ViewModel>(R.layout.${layoutName}) {
 
 
@@ -57,14 +54,13 @@ package $packageName
 
 import android.app.Activity
 import android.content.Intent
-import ${packageName}.util.setOnSingleClickListener
+import android.os.Bundle
+import com.afanticar.common.utils.setOnSingleClickListener
 import ${packageName}.databinding.Activity${activityClass}Binding
 import com.afanticar.base.ui.BaseMvvmActivity
-import dagger.hilt.android.AndroidEntryPoint
 
 
 
-@AndroidEntryPoint
 class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ViewModel>(R.layout.${layoutName}) {
 
 

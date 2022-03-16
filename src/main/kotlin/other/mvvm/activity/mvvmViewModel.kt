@@ -33,7 +33,6 @@ constructor(application: Application,val repository :${activityClass}ActivityRep
 package $packageName
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.afanticar.common.common_page_new_utils.CommonPageViewModel
@@ -44,11 +43,12 @@ import ${basePackageName}.viewmodel.BaseViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
-class ${activityClass}ViewModel @ViewModelInject 
-constructor(application: Application,val repository: ${activityClass}Repository): CommonPageViewModel(application) {
+class ${activityClass}ViewModel constructor(application: Application): CommonPageViewModel(application) {
 
 
-    val xData = MutableLiveData<CommonPageStatusBean<${beanName}Bean>>()
+    val repository: ${activityClass}Repository by lazy{${activityClass}Repository()}
+
+    val m${activityClass}Data = MutableLiveData<CommonPageStatusBean<${beanName}Bean>>()
 
     @InternalCoroutinesApi
     fun get${activityClass}Data(loadStatus: LoadStatusBean) {
@@ -56,7 +56,7 @@ constructor(application: Application,val repository: ${activityClass}Repository)
         viewModelScope.launch {
          
                val date= repository.get${activityClass}Data(loadStatus.current, loadStatus.pageSize)
-               xData.postValue(date)
+               m${activityClass}Data.postValue(date)
           
         }
 

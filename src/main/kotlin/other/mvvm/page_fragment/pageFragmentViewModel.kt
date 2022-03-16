@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.*
 class ${fragmentClass}FragmentViewModel @ViewModelInject 
 constructor(application: Application,val repository :${fragmentClass}FragmentRepository): BaseViewModel(application) {
 
-    suspend fun 网络请求(current: Int, size: Int):
+    suspend fun 网络请求(loadStatus: LoadStatusBean):
      Flow<AftResult<CommonPageBean<${beanName}Bean>>> {
         return pageExecute {
             repository.网络请求(current, size)

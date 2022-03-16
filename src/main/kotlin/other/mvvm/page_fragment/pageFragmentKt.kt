@@ -91,11 +91,9 @@ import ${packageName}.databinding.Fragment${fragmentClass}Binding
 import com.afanticar.common.common_page_new_utils.PageNewFragment
 import com.afanticar.common.common_page_new_utils.bean.LoadStatusBean
 import com.afanticar.common.widget.LinearSpacingItemDecoration
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
-@AndroidEntryPoint
 class ${fragmentClass}Fragment : PageNewFragment<Fragment${fragmentClass}Binding,${fragmentClass}ViewModel, ${beanName}Bean>(R.layout.${layoutName}) {
 
  private val m${beanName}Adapter by lazy { ${beanName}Adapter() }
@@ -111,7 +109,7 @@ class ${fragmentClass}Fragment : PageNewFragment<Fragment${fragmentClass}Binding
     }
     
     override fun initDataCallback() {
-        mViewModel.xData.observe(this, {
+        mViewModel.${fragmentClass}Data.observe(this, {
             setPageAdapterDataAndResetViewStatus(it)
         })
 
