@@ -8,48 +8,8 @@ fun mvvmAcitivityKt(
     beanName: String,
     viewModelEnable: Boolean,
     needPaging3Enable: Boolean
-) = if (needPaging3Enable) {
+) = if (viewModelEnable) {
     """
-package ${packageName}
-import ${basePackageName}.ui.BaseMvvmActivity
-import androidx.paging.PagingData
-import ${packageName}.databinding.Activity${activityClass}Binding
-import com.afanticar.common.ex.setOnSingleClickListener
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.launch
-
-
-
-
-class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Binding,${activityClass}ViewModel>(R.layout.${layoutName}) {
-
-
-    override fun initView() {
-    }
-
-    @InternalCoroutinesApi
-    override fun initData() {
-    
-         mBinding.${beanName.toLowerCase()}Adapter = ${beanName}Adapter(mActivity.applicationContext)
-    
-           lifecycleScope.launch {
-            mBinding?.viewModel?.getData()?.collect(object : FlowCollector<PagingData<${beanName}>> {
-                    override suspend fun emit(value: PagingData<${beanName}>) {
-//                        binding?.${beanName.toLowerCase()}Adapter?.submitData(value)
-                    }
-                })
-        }
-    }
-
-    override fun initOtherViewModel() {
-    }
-}
-"""
-} else {
-    if (viewModelEnable) {
-        """
 package $packageName
 
 import android.app.Activity
@@ -108,8 +68,8 @@ class ${activityClass}Activity : BaseMvvmActivity<Activity${activityClass}Bindin
     }
 }
 """
-    } else {
-        """
+} else {
+    """
 
 package ${packageName}
 import ${basePackageName}.ui.BaseActivity
@@ -121,5 +81,4 @@ class ${activityClass}Activity : BaseActivity(R.layout.${layoutName}) {
 }
     
    """
-    }
 }

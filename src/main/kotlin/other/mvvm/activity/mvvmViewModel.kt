@@ -6,28 +6,7 @@ fun mvvmViewModel(
     activityClass: String,
     beanName: String,
     needPaging3Enable: Boolean
-) = if (needPaging3Enable) {
-    """
-package $packageName
-
-import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.viewModelScope
-import ${basePackageName}.viewmodel.BaseViewModel
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import kotlinx.coroutines.flow.Flow
-
-class ${activityClass}ActivityViewModel @ViewModelInject 
-constructor(application: Application,val repository :${activityClass}ActivityRepository): BaseViewModel(application) {
-
-    fun getData(): Flow<PagingData<${beanName}>> {
-        return repository.getPagingData().cachedIn(viewModelScope)
-    }
-
-}
-"""
-} else {
+) =
 
     """
 package $packageName
@@ -37,9 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.afanticar.common.common_page_new_utils.CommonPageViewModel
 import com.afanticar.common.common_page_new_utils.bean.CommonPageStatusBean
-import com.afanticar.common.net.execute
-import com.afanticar.common.net.pageExecute
-import ${basePackageName}.viewmodel.BaseViewModel
+import com.afanticar.common.common_page_new_utils.bean.LoadStatusBean
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -55,7 +32,7 @@ class ${activityClass}ViewModel constructor(application: Application): CommonPag
 
         viewModelScope.launch {
          
-               val date= repository.get${activityClass}Data(loadStatus.current, loadStatus.pageSize)
+               val date= repository.get${activityClass}Data(loadStatus)
                m${activityClass}Data.postValue(date)
           
         }
@@ -64,4 +41,3 @@ class ${activityClass}ViewModel constructor(application: Application): CommonPag
     
 }
 """
-}
